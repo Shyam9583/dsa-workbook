@@ -9,23 +9,22 @@ public class CheckForMirrorInNaryTree {
 
     private static class Tree {
         int nNodes;
-        ArrayList<LinkedList<Integer>> adj;
+        ArrayList<ArrayList<Integer>> adj;
         Tree(int nNodes) {
             this.nNodes = nNodes;
             adj = new ArrayList<>();
             adj.add(null);
             for(int i = 0; i < nNodes; i++) {
-                adj.add(new LinkedList<>());
+                adj.add(new ArrayList<>());
             }
         }
         void addEdge(int to, int from) {
-            adj.get(from).add(to);
+            adj.get(to).add(from);
         }
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Deque<Integer> fq = new LinkedList<>(), sq = new LinkedList<>();
         int T = Integer.parseInt(reader.readLine());
         for(int t = 0; t < T; t++) {
             int[] NE = Arrays.stream(reader.readLine().trim().split(" ")).limit(2).mapToInt(Integer::parseInt).toArray();
@@ -37,13 +36,24 @@ public class CheckForMirrorInNaryTree {
                 first.addEdge(firstTreeNodes[i], firstTreeNodes[i + 1]);
                 second.addEdge(secondTreeNodes[i], secondTreeNodes[i + 1]);
             }
-            System.out.println(isMirror(first, second));
+            System.out.println(isMirror(first, second) ? "1" : "0");
         }
     }
 
-    private static int isMirror(Tree first, Tree second) {
-        // TODO: Handle this function
-        return 0;
+    private static boolean isMirror(Tree first, Tree second) {
+        for(int i = 1; i <= first.nNodes; i++) {
+            int sizeFirst = first.adj.get(i).size();
+            int sizeSecond = second.adj.get(i).size();
+            if(sizeFirst != sizeSecond)
+                return false;
+            for(int j = 0; j < sizeFirst; j++) {
+                int original = first.adj.get(i).get(j);
+                int mirror = second.adj.get(i).get(sizeFirst - 1 - j);
+                if(original != mirror)
+                    return false;
+            }
+        }
+        return true;
     }
 
 }
