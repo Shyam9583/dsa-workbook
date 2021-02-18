@@ -1,31 +1,11 @@
 package binarytree;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class DistanceBetween2Nodes {
 
     private static final int N = Integer.MIN_VALUE;
-
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
 
     private static Node createTree(int[] arr) {
         Node root = new Node(arr[0]);
@@ -55,19 +35,15 @@ public class DistanceBetween2Nodes {
     }
 
     public static void main(String[] args) {
-        Node root = createTree(new int[] {8, 6, 69, 1, 7, 29, 80, N, 4, N, N, 15, 31, 75, 96, 3, 5, 10, 21, 30, 57, 71, 78, 92, 97, 2, 96, 97});
+        Node root = createTree(new int[]{8, 6, 69, 1, 7, 29, 80, N, 4, N, N, 15, 31, 75, 96, 3, 5, 10, 21, 30, 57, 71, 78, 92, 97, 2, 96, 97});
 //        Node root = createTree(new int[] { 1, 2, 3 });
         System.out.println(minDistance(root, 96, 97));
     }
 
-    private static class Result {
-        int distance = 0;
-    }
-
     private static int minDistance(Node root, int a, int b) {
-        if(root == null) return -1;
+        if (root == null) return -1;
         Node lca = lca(root, a, b);
-        if(lca == null) return -1;
+        if (lca == null) return -1;
         Result rootToA = new Result(), rootToB = new Result(), rootToLca = new Result();
         distance(root, a, 0, rootToA);
         distance(root, b, 0, rootToB);
@@ -76,24 +52,48 @@ public class DistanceBetween2Nodes {
     }
 
     private static Node lca(Node root, int n1, int n2) {
-        if(root == null) return null;
-        if(root.data == n1 || root.data == n2) return root;
+        if (root == null) return null;
+        if (root.data == n1 || root.data == n2) return root;
         Node left = lca(root.left, n1, n2);
         Node right = lca(root.right, n1, n2);
-        if(left != null && right != null)
+        if (left != null && right != null)
             return root;
-        else if(left != null) {
+        else if (left != null) {
             return left;
         } else return right;
     }
 
     private static void distance(Node node, int target, int len, Result result) {
-        if(node == null) return;
-        if(node.data == target) {
+        if (node == null) return;
+        if (node.data == target) {
             result.distance = len;
             return;
         }
         distance(node.left, target, len + 1, result);
         distance(node.right, target, len + 1, result);
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
+    }
+
+    private static class Result {
+        int distance = 0;
     }
 }

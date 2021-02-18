@@ -7,25 +7,6 @@ public class LowestCommonAncestor {
 
     private static final int N = Integer.MIN_VALUE;
 
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
-
     private static Node createTree(int[] arr) {
         Node root = new Node(arr[0]);
         Queue<Node> q = new LinkedList<>();
@@ -54,20 +35,40 @@ public class LowestCommonAncestor {
     }
 
     public static void main(String[] args) {
-        Node root = createTree(new int[] { 5, 2, N, 3, 4, 6, 7 });
+        Node root = createTree(new int[]{5, 2, N, 3, 4, 6, 7});
         System.out.println(lca(root, 7, 4));
     }
 
     private static Node lca(Node root, int n1, int n2) {
-        if(root == null) return null;
-        if(root.data == n1 || root.data == n2) return root;
+        if (root == null) return null;
+        if (root.data == n1 || root.data == n2) return root;
         Node left = lca(root.left, n1, n2);
         Node right = lca(root.right, n1, n2);
-        if(left != null && right != null)
+        if (left != null && right != null)
             return root;
-        else if(left != null)
+        else if (left != null)
             return left;
         else return right;
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
     }
 
 }

@@ -7,25 +7,6 @@ public class LargestSubtreeSum {
 
     private static final int N = Integer.MIN_VALUE;
 
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
-
     private static Node createTree(int[] arr) {
         Node root = new Node(arr[0]);
         Queue<Node> q = new LinkedList<>();
@@ -54,22 +35,42 @@ public class LargestSubtreeSum {
     }
 
     public static void main(String[] args) {
-        Node root = createTree(new int[] { 1, 2, 3, 4, 5, 6, 7 });
+        Node root = createTree(new int[]{1, 2, 3, 4, 5, 6, 7});
         System.out.println(maxSum(root));
     }
 
     private static int maxSum(Node root) {
-        int[] result = { Integer.MIN_VALUE };
+        int[] result = {Integer.MIN_VALUE};
         computeSum(root, result);
         return result[0];
     }
 
     private static int computeSum(Node node, int[] result) {
-        if(node == null) return 0;
+        if (node == null) return 0;
         int sum = computeSum(node.left, result) + computeSum(node.right, result) + node.data;
-        if(sum > result[0])
+        if (sum > result[0])
             result[0] = sum;
         return sum;
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
     }
 
 }

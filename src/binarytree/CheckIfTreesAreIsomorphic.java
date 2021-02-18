@@ -7,26 +7,7 @@ public class CheckIfTreesAreIsomorphic {
 
     private static final int N = Integer.MIN_VALUE;
 
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
-
-    private static Node createTree(int...arr) {
+    private static Node createTree(int... arr) {
         Node root = new Node(arr[0]);
         Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -60,10 +41,30 @@ public class CheckIfTreesAreIsomorphic {
     }
 
     private static boolean isIsomorphic(Node first, Node second) {
-        if(first == null || second == null) return first == second;
+        if (first == null || second == null) return first == second;
         boolean mirror = isIsomorphic(first.left, second.right) && isIsomorphic(first.right, second.left);
         boolean same = isIsomorphic(first.left, second.left) && isIsomorphic(first.right, second.right);
         return first.data == second.data && (mirror || same);
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
     }
 
 }

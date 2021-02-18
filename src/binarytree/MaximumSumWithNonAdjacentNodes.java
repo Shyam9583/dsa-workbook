@@ -8,26 +8,7 @@ public class MaximumSumWithNonAdjacentNodes {
 
     private static final int N = Integer.MIN_VALUE;
 
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
-
-    private static Node createTree(int...arr) {
+    private static Node createTree(int... arr) {
         Node root = new Node(arr[0]);
         Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -65,20 +46,40 @@ public class MaximumSumWithNonAdjacentNodes {
     }
 
     private static int sum(Node node, HashMap<Node, Integer> dp) {
-        if(node == null) return 0;
-        if(dp.containsKey(node)) return dp.get(node);
+        if (node == null) return 0;
+        if (dp.containsKey(node)) return dp.get(node);
         int inc = node.data;
-        if(node.left != null) {
+        if (node.left != null) {
             inc += sum(node.left.left, dp);
             inc += sum(node.left.right, dp);
         }
-        if(node.right != null) {
+        if (node.right != null) {
             inc += sum(node.right.left, dp);
             inc += sum(node.right.right, dp);
         }
         int exc = sum(node.left, dp) + sum(node.right, dp);
         dp.put(node, Math.max(inc, exc));
         return dp.get(node);
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
     }
 
 }

@@ -6,24 +6,6 @@ import java.util.Queue;
 
 public class CheckForDuplicateSubtrees {
 
-    private static class Node {
-        int data;
-        Node left, right;
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-    }
-
     private static final int N = Integer.MIN_VALUE;
 
     private static Node createTree(int[] arr) {
@@ -54,32 +36,50 @@ public class CheckForDuplicateSubtrees {
     }
 
     public static void main(String[] args) {
-        Node root = createTree(new int[] { 1, 2, 3 });
+        Node root = createTree(new int[]{1, 2, 3});
         System.out.println(containsDuplicateSubtrees(root));
     }
 
     private static boolean containsDuplicateSubtrees(Node root) {
         HashMap<Long, Integer> map = new HashMap<>();
         compute(root, map);
-        for(long key: map.keySet()) {
-            if(map.get(key) > 1)
+        for (long key : map.keySet()) {
+            if (map.get(key) > 1)
                 return true;
         }
         return false;
     }
 
     private static long compute(Node node, HashMap<Long, Integer> map) {
-        if(node == null) return 0;
+        if (node == null) return 0;
         long left = compute(node.left, map);
         long right = compute(node.right, map);
         long hash = (left * right * node.data) + (left + right + node.data);
-        if(node.left != null || node.right != null) {
-            if(map.containsKey(hash))
+        if (node.left != null || node.right != null) {
+            if (map.containsKey(hash))
                 map.replace(hash, map.get(hash) + 1);
             else
                 map.put(hash, 1);
         }
         return hash;
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
     }
 
 }

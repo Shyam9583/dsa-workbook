@@ -6,30 +6,10 @@ import java.util.Queue;
 
 public class ConvertBinaryTreeToBST {
 
+    private static final int N = Integer.MIN_VALUE;
     private static int index = 0;
 
-    private static final int N = Integer.MIN_VALUE;
-
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
-
-    private static Node createTree(int...arr) {
+    private static Node createTree(int... arr) {
         Node root = new Node(arr[0]);
         Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -57,7 +37,7 @@ public class ConvertBinaryTreeToBST {
     }
 
     private static void print(Node root) {
-        if(root == null) return;
+        if (root == null) return;
         print(root.left);
         System.out.print(root.data + " ");
         print(root.right);
@@ -70,7 +50,7 @@ public class ConvertBinaryTreeToBST {
     }
 
     private static Node construct(Node root) {
-        if(root == null) return null;
+        if (root == null) return null;
         ArrayList<Integer> inorder = new ArrayList<>();
         traversal(root, inorder);
         inorder.sort(Integer::compareTo);
@@ -79,16 +59,36 @@ public class ConvertBinaryTreeToBST {
     }
 
     private static void inorderToBST(ArrayList<Integer> inorder, Node root) {
-        if(root == null) return;
+        if (root == null) return;
         inorderToBST(inorder, root.left);
         root.data = inorder.get(index++);
         inorderToBST(inorder, root.right);
     }
 
     private static void traversal(Node root, ArrayList<Integer> inorder) {
-        if(root == null) return;
+        if (root == null) return;
         traversal(root.left, inorder);
         inorder.add(root.data);
         traversal(root.right, inorder);
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
     }
 }

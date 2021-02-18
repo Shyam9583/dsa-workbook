@@ -5,30 +5,10 @@ import java.util.Queue;
 
 public class KthAncestorOfANode {
 
+    private static final int N = Integer.MIN_VALUE;
     private static int K;
 
-    private static final int N = Integer.MIN_VALUE;
-
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
-
-    private static Node createTree(int...arr) {
+    private static Node createTree(int... arr) {
         Node root = new Node(arr[0]);
         Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -67,16 +47,36 @@ public class KthAncestorOfANode {
     }
 
     private static Node kthAncestorUtil(Node node, int target) {
-        if(node == null) return null;
-        if(node.data == target || kthAncestorUtil(node.left, target) != null || kthAncestorUtil(node.right, target) != null) {
-            if(K > 0) K--;
-            if(K == 0) {
+        if (node == null) return null;
+        if (node.data == target || kthAncestorUtil(node.left, target) != null || kthAncestorUtil(node.right, target) != null) {
+            if (K > 0) K--;
+            if (K == 0) {
                 System.out.println(node.data);
                 return null;
             }
             return node;
         }
         return null;
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
     }
 
 }

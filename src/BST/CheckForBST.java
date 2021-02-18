@@ -8,26 +8,7 @@ public class CheckForBST {
 
     private static final int N = Integer.MIN_VALUE;
 
-    private static class Node {
-        int data;
-        Node left, right;
-
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    '}';
-        }
-
-    }
-
-    private static Node createTree(int...arr) {
+    private static Node createTree(int... arr) {
         Node root = new Node(arr[0]);
         Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -64,13 +45,13 @@ public class CheckForBST {
     }
 
     private static boolean isBinaryTreeUtil(Node root, HashMap<Node, Boolean> dp) {
-        if(root == null) return true;
-        if(dp.containsKey(root)) return dp.get(root);
+        if (root == null) return true;
+        if (dp.containsKey(root)) return dp.get(root);
         boolean leftIsBST = true, rightIsBST = true;
-        if(root.left != null) {
+        if (root.left != null) {
             leftIsBST = root.left.data < root.data;
         }
-        if(root.right != null) {
+        if (root.right != null) {
             rightIsBST = root.right.data > root.data;
         }
         dp.putIfAbsent(root, leftIsBST && rightIsBST);
@@ -78,9 +59,29 @@ public class CheckForBST {
     }
 
     private static boolean isBSTUtil(Node root, int min, int max) {
-        if(root == null) return true;
-        if(root.data < min || root.data > max) return false;
+        if (root == null) return true;
+        if (root.data < min || root.data > max) return false;
         return isBSTUtil(root.left, min, root.data - 1) && isBSTUtil(root.right, root.data + 1, max);
+    }
+
+    private static class Node {
+        int data;
+        Node left, right;
+
+
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
+        }
+
     }
 
 
