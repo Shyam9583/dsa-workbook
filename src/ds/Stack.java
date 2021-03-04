@@ -10,32 +10,41 @@ public class Stack {
     }
 
     public int peek() {
-        if (top == null)
+        if (isEmpty())
             throw new EmptyStackException();
-        else
-            return top.data;
-    }
-
-    public void push(int data) {
-        Node node = new Node(data);
-        node.next = top;
-        top = node;
+        return top.data;
     }
 
     public int pop() {
-        if (top == null)
+        if (isEmpty())
             throw new EmptyStackException();
         int data = top.data;
         top = top.next;
         return data;
     }
 
+    public void push(int data) {
+        Node newNode = new Node(data);
+        if (!isEmpty()) {
+            newNode.next = top;
+        }
+        top = newNode;
+    }
+
     private static class Node {
-        private final int data;
-        private Node next;
+        int data;
+        Node next;
 
         Node(int data) {
             this.data = data;
+            next = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    '}';
         }
     }
 }
