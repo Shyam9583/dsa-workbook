@@ -1,11 +1,11 @@
-import ds.Stack;
+import ds.Queue;
 
 public class Test {
-    public static void main(String[] args) {
-        Stack stack = new Stack();
-        int[] arr = {1, 2, 3, 4, 5};
-        for (int item : arr) stack.push(item);
-        System.out.println(stack.peek());
-        while (!stack.isEmpty()) System.out.println(stack.pop());
+    public static void main(String[] args) throws Exception {
+        Queue q = new Queue();
+        for (int i = 0; i < 5; i++)
+            q.add(i);
+        while (!q.isEmpty())
+            System.out.println(q.remove());
     }
 }
