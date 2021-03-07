@@ -10,7 +10,8 @@ public class ArithmeticOperationEvaluation {
     public static void main(String[] args) {
         init();
         String expression = "(A+B/C*(D+E)-F)";
-        System.out.println(infixToPostfix(expression));
+        int result = evaluate(expression, 1, 2, 2, 1, 1, 1);
+        System.out.println(result);
     }
 
     private static void init() {
@@ -61,7 +62,6 @@ public class ArithmeticOperationEvaluation {
         stack.push(operator);
     }
 
-
     private static String infixToPostfix(String infix) {
         Stack<Character> stack = new Stack<>();
         StringBuilder postfix = new StringBuilder();
@@ -79,5 +79,35 @@ public class ArithmeticOperationEvaluation {
             postfix.append(stack.pop());
         }
         return postfix.toString();
+    }
+
+    private static int evaluate(String expression, int... vars) {
+        String postfix = infixToPostfix(expression);
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0, v = 0; i < postfix.length(); i++) {
+            if (isVariable(postfix.charAt(i))) {
+                stack.push(vars[v++]);
+            } else {
+                int a = stack.pop(), b = stack.pop();
+                int result = calculate(b, a, postfix.charAt(i));
+                stack.push(result);
+            }
+        }
+        return stack.pop();
+    }
+
+    private static int calculate(int a, int b, char op) {
+        switch (op) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                return b == 0 ? Integer.MAX_VALUE : a / b;
+            default:
+                return 0;
+        }
     }
 }
