@@ -1,15 +1,13 @@
 package searchandsort;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 public class FindMedianIn2SortedArrays {
-    public static void main(String[] args) throws InvalidArgumentException {
+    public static void main(String[] args) throws Exception {
         int[] A = {2, 3, 6, 7, 9};
         int[] B = {1, 4, 8, 10};
         System.out.println(median(A, B));
     }
 
-    private static double median(int[] A, int[] B) throws InvalidArgumentException {
+    private static double median(int[] A, int[] B) throws Exception {
         if (A.length > B.length) {
             return median(B, A);
         }
@@ -38,6 +36,6 @@ public class FindMedianIn2SortedArrays {
                 low = partitionX + 1;
             }
         }
-        throw new InvalidArgumentException(new String[]{"One or Both Arrays are not sorted properly"});
+        throw new Exception("One or Both Arrays are not sorted properly");
     }
 }

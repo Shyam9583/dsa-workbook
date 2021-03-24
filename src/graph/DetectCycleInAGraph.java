@@ -76,10 +76,6 @@ public class DetectCycleInAGraph {
             addEdge(from, to, 1);
         }
 
-        List<Edge<T>> getEdges(T node) {
-            return adj.get(node);
-        }
-
         List<T> getNeighbours(T node) {
             return adj.get(node).stream().map(o -> o.node).collect(Collectors.toCollection(ArrayList::new));
         }
