@@ -1,38 +1,48 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Prim {
     public static void main(String[] args) {
         Graph graph = getGraph();
         int V = 9;
-        prim(graph, V).forEach(System.out::println);
+        System.out.println(prim(graph, V).stream().mapToInt(o -> o.weight).sum());
     }
 
     private static ArrayList<Edge> prim(Graph graph, int V) {
-        boolean[] selected = new boolean[V];
-        Edge[] nodeEdge = new Edge[V];
+        int[] distance = new int[V];
+        int[] parent = new int[V];
+        boolean[] visited = new boolean[V];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[0] = 0;
         int curr = 0;
-        for (int i = 0; i < V; i++) {
-            int next = curr;
-            selected[curr] = true;
-            Map<Integer, Integer> adjacent = graph.getEdges(curr);
-            for (int neighbor : adjacent.keySet()) {
-                if (nodeEdge[neighbor] == null || nodeEdge[neighbor].weight > adjacent.get(neighbor)) {
-                    if (selected[neighbor]) continue;
-                    nodeEdge[neighbor] = new Edge(curr, neighbor, adjacent.get(neighbor));
-                    next = neighbor;
+        for(int i = 1; i < V; i++) {
+            visited[curr] = true;
+            Map<Integer, Integer> edges = graph.getEdges(curr);
+            for(int neighbor: edges.keySet()) {
+                if(edges.get(neighbor) < distance[neighbor]) {
+                    distance[neighbor] = edges.get(neighbor);
+                    parent[neighbor] = curr;
                 }
             }
-            curr = next;
+            curr = min(distance, visited);
         }
         ArrayList<Edge> result = new ArrayList<>();
-        for (Edge edge : nodeEdge) {
-            if (edge != null) result.add(edge);
+        for(int i = 1; i < V; i++) {
+            result.add(new Edge(parent[i], i, distance[i]));
         }
         return result;
+    }
+
+    private static int min(int[] distance, boolean[] visited) {
+        int min = Integer.MAX_VALUE, idx = -1;
+        for(int i = 0; i < distance.length; i++) {
+            if(!visited[i] && min > distance[i]) {
+                min = distance[i];
+                idx = i;
+            }
+        }
+        return idx;
     }
 
     private static Graph getGraph() {
@@ -84,7 +94,6 @@ public class Prim {
             adj.putIfAbsent(u, new HashMap<>());
             adj.putIfAbsent(v, new HashMap<>());
             adj.get(u).put(v, weight);
-            adj.get(v).put(u, weight);
         }
 
         Map<Integer, Integer> getEdges(int node) {
