@@ -1,6 +1,9 @@
 package graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Prim {
     public static void main(String[] args) {
@@ -16,11 +19,11 @@ public class Prim {
         Arrays.fill(distance, Integer.MAX_VALUE);
         distance[0] = 0;
         int curr = 0;
-        for(int i = 1; i < V; i++) {
+        for (int i = 1; i < V; i++) {
             visited[curr] = true;
             Map<Integer, Integer> edges = graph.getEdges(curr);
-            for(int neighbor: edges.keySet()) {
-                if(edges.get(neighbor) < distance[neighbor]) {
+            for (int neighbor : edges.keySet()) {
+                if (edges.get(neighbor) < distance[neighbor]) {
                     distance[neighbor] = edges.get(neighbor);
                     parent[neighbor] = curr;
                 }
@@ -28,7 +31,7 @@ public class Prim {
             curr = min(distance, visited);
         }
         ArrayList<Edge> result = new ArrayList<>();
-        for(int i = 1; i < V; i++) {
+        for (int i = 1; i < V; i++) {
             result.add(new Edge(parent[i], i, distance[i]));
         }
         return result;
@@ -36,8 +39,8 @@ public class Prim {
 
     private static int min(int[] distance, boolean[] visited) {
         int min = Integer.MAX_VALUE, idx = -1;
-        for(int i = 0; i < distance.length; i++) {
-            if(!visited[i] && min > distance[i]) {
+        for (int i = 0; i < distance.length; i++) {
+            if (!visited[i] && min > distance[i]) {
                 min = distance[i];
                 idx = i;
             }

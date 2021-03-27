@@ -1,11 +1,9 @@
 package graph;
 
 import java.io.BufferedReader;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Map;
 
 public class FloydWarshall {
 
@@ -15,7 +13,7 @@ public class FloydWarshall {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(reader.readLine());
         int[][] matrix = new int[n][n];
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             matrix[i] = Arrays.stream(reader.readLine().trim().split(" ")).limit(n).mapToInt(Integer::parseInt).toArray();
         }
         System.out.println("\nBefore\n");
@@ -26,7 +24,7 @@ public class FloydWarshall {
     }
 
     private static void printMatrix(int[][] matrix) {
-        for(int[] row: matrix) {
+        for (int[] row : matrix) {
             System.out.println(Arrays.toString(row));
         }
     }
@@ -46,9 +44,9 @@ public class FloydWarshall {
                 }
             }
         }
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                if(matrix[i][j] >= INF)
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] >= INF)
                     matrix[i][j] = -1;
             }
         }
