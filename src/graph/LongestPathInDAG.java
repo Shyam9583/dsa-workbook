@@ -1,9 +1,6 @@
 package graph;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class LongestPathInDAG {
 
@@ -23,36 +20,46 @@ public class LongestPathInDAG {
     }
 
     private static void longestPath(int source, int V, Map<Integer, Map<Integer, Integer>> adj) {
-        Stack<Integer> stack = new Stack<>();
-        boolean[] visited = new boolean[V];
-        for (int i = 0; i < V; i++) {
-            if (!visited[i]) {
-                topologicalSort(i, adj, visited, stack);
-            }
-        }
-        int[] distance = new int[V];
-        Arrays.fill(distance, INFINITY);
-        distance[source] = 0;
-        while (!stack.isEmpty()) {
-            int u = stack.pop();
-            if (distance[u] != INFINITY) {
-                for (int v : adj.get(u).keySet()) {
-                    distance[v] = Math.max(distance[v], distance[u] + adj.get(u).get(v));
+        int[] topological = topologicalSort(V, adj);
+        int[] longestPath = new int[V];
+        Arrays.fill(longestPath, INFINITY);
+        longestPath[source] = 0;
+        for (int node : topological) {
+            for (int neighbor : adj.get(node).keySet()) {
+                int newPathLength = longestPath[node] + adj.get(node).get(neighbor);
+                if (newPathLength > longestPath[neighbor]) {
+                    longestPath[neighbor] = newPathLength;
                 }
             }
         }
-        for (int i = 0; i < V; i++) {
-            System.out.println((distance[i] == INFINITY ? "INFINITY" : distance[i]) + " ");
+        for (int length : longestPath) {
+            System.out.print((length == INFINITY ? "INFINITY" : length) + " ");
         }
     }
 
-    private static void topologicalSort(int u, Map<Integer, Map<Integer, Integer>> adj, boolean[] visited, Stack<Integer> stack) {
-        visited[u] = true;
-        for (int v : adj.get(u).keySet()) {
-            if (!visited[u]) {
-                topologicalSort(v, adj, visited, stack);
+    private static int[] topologicalSort(int V, Map<Integer, Map<Integer, Integer>> adj) {
+        Queue<Integer> q = new LinkedList<>();
+        int[] inDegree = new int[V];
+        int[] result = new int[V];
+        int ptr = 0;
+        for (int node : adj.keySet()) {
+            for (int neighbor : adj.get(node).keySet()) {
+                inDegree[neighbor]++;
             }
         }
-        stack.push(u);
+        for (int v = 0; v < V; v++) {
+            if (inDegree[v] == 0) q.add(v);
+        }
+        while (!q.isEmpty()) {
+            int current = q.remove();
+            result[ptr++] = current;
+            Map<Integer, Integer> neighbors = adj.get(current);
+            for (int neighbor : neighbors.keySet()) {
+                if (--inDegree[neighbor] == 0) {
+                    q.add(neighbor);
+                }
+            }
+        }
+        return result;
     }
 }
