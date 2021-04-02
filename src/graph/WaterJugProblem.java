@@ -47,9 +47,9 @@ public class WaterJugProblem {
                 if (c == a || d == 0) q.add(new State(c, d));
             }
 
-            // Empty Jug2 and Jug1
-            q.add(new State(curr.a, 0));
-            q.add(new State(0, curr.b));
+            // Empty Jug2 and fill Jug1 and vice versa
+            q.add(new State(a, 0));
+            q.add(new State(0, b));
         }
         if (notSolvable) System.out.println("NO SOLUTION EXISTS!");
     }
