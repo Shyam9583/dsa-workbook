@@ -11,7 +11,7 @@ public class ContiguousSubArrayWithMaxSum {
         for (int val : arr) {
             maxTillNow += val;
             maxSoFar = Math.max(maxSoFar, maxTillNow);
-            if (maxTillNow < 0) maxTillNow = 0;
+            maxTillNow = Math.max(maxTillNow, 0);
         }
         return maxSoFar;
     }
