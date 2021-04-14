@@ -8,7 +8,7 @@ public class MinSumContiguousSubArray {
 
     private static int minSum(int[] arr) {
         int minSoFar = Integer.MAX_VALUE, minTillNow = 0;
-        for(int item: arr) {
+        for (int item : arr) {
             minTillNow += item;
             minSoFar = Math.min(minSoFar, minTillNow);
             minTillNow = Math.min(minTillNow, 0);

@@ -18,9 +18,9 @@ public class WordBreakProblem {
         int n = A.length();
         int[] dp = new int[n + 1];
         dp[0] = 1;
-        for(int i = 1; i <= n; i++) {
-            for(int j = 0; j < i; j++) {
-                if(dict.contains(A.substring(j, i))) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (dict.contains(A.substring(j, i))) {
                     dp[i] += dp[j];
                 }
             }
