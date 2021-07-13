@@ -7,12 +7,8 @@ public class PrintAllPossiblePalindromicPartitions {
     }
 
     private static boolean isPalindrome(String s) {
-        int left = 0, right = s.length() - 1;
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right))
-                return false;
-            left++;
-            right--;
+        for (int left = 0, right = s.length() - 1; left < right; left++, right--) {
+            if (s.charAt(left) != s.charAt(right)) return false;
         }
         return true;
     }

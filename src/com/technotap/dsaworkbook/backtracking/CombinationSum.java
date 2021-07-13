@@ -16,7 +16,6 @@ public class CombinationSum {
 
     private static ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> arr, int sum) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        new TreeSet<>(arr);
         arr = new ArrayList<>(new TreeSet<>(arr));
         recursive(arr, result, new ArrayList<>(), sum, 0);
         return result;
