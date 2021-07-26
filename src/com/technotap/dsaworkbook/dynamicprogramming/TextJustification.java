@@ -52,7 +52,7 @@ public class TextJustification {
                 int spacing = (optimalSpaces[curr] / (count - 1)) + 1;
                 int remaining = optimalSpaces[curr] % (count - 1);
                 for (int i = curr + 1; i < next[curr]; i++) {
-                    for (int c = 0; c < spacing; c++) builder.append(" ");
+                    builder.append(" ".repeat(Math.max(0, spacing)));
                     if (remaining-- > 0) builder.append(" ");
                     builder.append(words[i]);
                 }
