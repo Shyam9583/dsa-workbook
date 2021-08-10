@@ -26,10 +26,11 @@ public class ReverseADoublyLinkedListOfGivenSize {
         if (head == null || head.next == null || k == 1) return head;
         Node curr = head, newHead = null, next = null;
         int count = 0;
-        while (curr != null && count++ < k) {
+        while (curr != null && count < k) {
             next = curr.next;
             newHead = push(newHead, curr);
             curr = next;
+            count++;
         }
         if (count != k) {
             curr = head;
