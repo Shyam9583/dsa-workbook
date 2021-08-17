@@ -5,15 +5,9 @@ public class BST {
     private static Node insert(Node root, int value) {
         if (root == null) return new Node(value);
         if (value <= root.data) {
-            if (root.left == null)
-                root.left = new Node(value);
-            else
-                root.left = insert(root.left, value);
+            root.left = insert(root.left, value);
         } else {
-            if (root.right == null)
-                root.right = new Node(value);
-            else
-                root.right = insert(root.right, value);
+            root.right = insert(root.right, value);
         }
         return root;
     }
@@ -56,19 +50,16 @@ public class BST {
                 root.data = min;
                 root.right = delete(root.right, min);
             }
-        } else if (value < root.data)
+        } else if (value < root.data) {
             root.left = delete(root.left, value);
-        else
+        } else {
             root.right = delete(root.right, value);
+        }
         return root;
     }
 
     private static int min(Node root) {
-        if (root.left == null)
-            return root.data;
-        else
-            return min(root.left);
-
+        return root.left == null ? root.data : min(root.left);
     }
 
     public static void main(String[] args) {

@@ -4,10 +4,35 @@ import java.util.*;
 
 public class ReverseLevelOrderTraversal {
 
+    public static final int NULL = -1;
+
     public static void main(String[] args) {
         Node root = construct();
         List<Integer> result = reverseLevelOrder(root);
         System.out.println(result);
+    }
+
+    public static Node createTree(int...arr) {
+        Queue<Node> queue = new LinkedList<>();
+        Node root = new Node(arr[0]);
+        queue.add(root);
+        insert(arr, 1, queue);
+        return root;
+    }
+
+    private static void insert(int[] arr, int pos, Queue<Node> queue) {
+        if (pos == arr.length) return;
+        Node newNode = arr[pos] == NULL ? null : new Node(arr[pos]);
+        Node root = queue.peek();
+        if (root == null) return;
+        if ((pos & 1) == 1) {
+            root.left = newNode;
+        } else {
+            root.right = newNode;
+            queue.poll();
+        }
+        if (newNode != null) queue.add(newNode);
+        insert(arr, pos + 1, queue);
     }
 
     private static List<Integer> reverseLevelOrder(Node root) {
@@ -30,19 +55,12 @@ public class ReverseLevelOrderTraversal {
     }
 
     private static Node construct() {
-        Node root = new Node(10);
-        root.left = new Node(20);
-        root.right = new Node(30);
-        root.left.left = new Node(40);
-        root.left.right = new Node(50);
-        root.right.left = new Node(60);
-        root.right.right = new Node(70);
-        return root;
+        return createTree(10, 20, 30, 40, 50, 60, 70);
     }
 
-    private static class Node {
-        int data;
-        Node left, right;
+    public static class Node {
+        public int data;
+        public Node left, right;
 
         Node(int data) {
             this.data = data;
