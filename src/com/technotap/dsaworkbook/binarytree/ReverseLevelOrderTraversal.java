@@ -12,7 +12,7 @@ public class ReverseLevelOrderTraversal {
         System.out.println(result);
     }
 
-    public static Node createTree(int...arr) {
+    public static Node createTree(int... arr) {
         Queue<Node> queue = new LinkedList<>();
         Node root = new Node(arr[0]);
         queue.add(root);
