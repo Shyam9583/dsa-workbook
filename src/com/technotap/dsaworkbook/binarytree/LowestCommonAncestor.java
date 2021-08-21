@@ -68,7 +68,6 @@ public class LowestCommonAncestor {
                     "data=" + data +
                     '}';
         }
-
     }
 
 }
