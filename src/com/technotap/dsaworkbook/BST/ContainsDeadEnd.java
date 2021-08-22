@@ -4,7 +4,7 @@ import java.util.TreeMap;
 
 public class ContainsDeadEnd {
 
-    private static Node createBST(int... arr) {
+    public static Node createBST(int... arr) {
         if (arr.length == 0) return null;
         Node root = new Node(arr[0]);
         for (int i = 1; i < arr.length; i++) {
