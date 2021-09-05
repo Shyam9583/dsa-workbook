@@ -44,11 +44,8 @@ public class MaximumTrainStoppage {
 
         @Override
         public int compareTo(Train o) {
-            if (departure < o.departure)
-                return -1;
-            if (departure > o.departure)
-                return 1;
-            return arrival >= o.arrival ? -1 : 1;
+            if (departure == o.departure) return arrival - o.arrival;
+            return departure - o.departure;
         }
     }
 

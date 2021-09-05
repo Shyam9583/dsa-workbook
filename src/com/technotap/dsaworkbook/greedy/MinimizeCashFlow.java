@@ -18,18 +18,14 @@ public class MinimizeCashFlow {
                 amount[p] += graph[i][p] - graph[p][i];
             }
         }
-        minimizeCashFlowRec(amount);
-    }
-
-    private static void minimizeCashFlowRec(int[] amount) {
-        int maxDebtor = maxDebtor(amount), maxCreditor = maxCreditor(amount);
-        if (amount[maxCreditor] == 0 && amount[maxDebtor] == 0)
-            return;
-        int minAmount = minimumOfDebitCredit(-amount[maxDebtor], amount[maxCreditor]);
-        amount[maxDebtor] += minAmount;
-        amount[maxCreditor] -= minAmount;
-        System.out.println(maxDebtor + " Paid " + minAmount + " to " + maxCreditor);
-        minimizeCashFlowRec(amount);
+        while (true) {
+            int maxDebtor = maxDebtor(amount), maxCreditor = maxCreditor(amount);
+            if (amount[maxDebtor] == 0 && amount[maxCreditor] == 0) break;
+            int minAmount = Math.min(-amount[maxDebtor], amount[maxCreditor]);
+            amount[maxDebtor] += minAmount;
+            amount[maxCreditor] -= minAmount;
+            System.out.println(maxDebtor + " gave " + maxCreditor + " $" + minAmount);
+        }
     }
 
     private static int maxDebtor(int[] amount) {
@@ -44,10 +40,6 @@ public class MinimizeCashFlow {
         for (int i = 1; i < amount.length; i++)
             if (amount[result] < amount[i]) result = i;
         return result;
-    }
-
-    private static int minimumOfDebitCredit(int debit, int credit) {
-        return Math.min(debit, credit);
     }
 
 }

@@ -10,7 +10,7 @@ public class Gergovia {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int n;
         long[] arr;
-        while ((n = Integer.parseInt(reader.readLine())) != 0) {
+        while ((n = Integer.parseInt(reader.readLine().trim())) != 0) {
             arr = Arrays.stream(reader.readLine().trim().split(" ")).limit(n).mapToLong(Long::parseLong).toArray();
             System.out.println(work(arr, n));
         }
